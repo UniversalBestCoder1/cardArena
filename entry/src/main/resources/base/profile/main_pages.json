@@ -1,0 +1,13 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/LoginPage",
+    "pages/CardDetailPage",
+    "pages/MemberCardPage",
+    "pages/WalletPage",
+    "pages/MyDeckPage",
+    "pages/RentalHistoryPage",
+    "pages/AdminInventoryPage",
+    "pages/AdminFinancePage"
+  ]
+}

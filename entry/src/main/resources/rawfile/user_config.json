@@ -1,0 +1,22 @@
+{
+  "users": [
+    { "id": "u_admin", "username": "admin", "password": "123", "role": "MANAGER", "wallet_balance": 99999 },
+    {
+      "id": "u_staff", 
+      "username": "staff", 
+      "password": "123", 
+      "role": "STAFF", 
+      "wallet_balance": 500,
+      "referee_profile": "{\"specializedGame\":[\"YGO\",\"MTG\"],\"specializedFormats\":[\"OCG Advanced\",\"Standard\",\"Draft\"],\"bio\":\"拥有5年裁判经验，熟悉各类卡牌游戏规则。\",\"yearsOfExperience\":5}"
+    },
+    {
+      "id": "u_referee_2", 
+      "username": "ProJudge", 
+      "password": "123", 
+      "role": "STAFF", 
+      "wallet_balance": 1000,
+      "referee_profile": "{\"specializedGame\":[\"MTG\"],\"specializedFormats\":[\"Modern\",\"Legacy\",\"Commander\"],\"bio\":\"L2 认证裁判，专注于万智牌高级赛制判罚。\",\"yearsOfExperience\":8}"
+    },
+    { "id": "u_player", "username": "player", "password": "123", "role": "PLAYER", "wallet_balance": 100 }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "app": {
+    "bundleName": "com.example.uniappdemo",
+    "vendor": "example",
+    "versionCode": 1000000,
+    "versionName": "1.0.0",
+    "icon": "$media:mtga_icon",
+    "label": "$string:app_name"
+  }
+}

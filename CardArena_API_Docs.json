@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "b3e94321-card-arena-demo-v1",
+		"name": "CardArena (决斗链接线下版) API",
+		"description": "线下桌游管理系统 API 接口规范.\n\n**Base URL**: https://api.cardarena.com/v1\n**注意**: 本项目前端使用 MockService 模拟数据，以下接口为逻辑定义。",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "赛事 (Tournament)",
+			"item": [
+				{
+					"name": "获取赛事列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/tournaments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tournaments"
+							]
+						},
+						"description": "获取近期所有可报名的比赛列表。"
+					},
+					"response": []
+				},
+				{
+					"name": "报名比赛",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"u_123456\",\n    \"deckUsed\": \"Rescue-ACE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tournaments/:id/join",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tournaments",
+								":id",
+								"join"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "t001"
+								}
+							]
+						},
+						"description": "用户报名指定比赛，扣除积分。"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "资源 (Resource)",
+			"item": [
+				{
+					"name": "获取可租用卡组",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/decks?gameType=YGO",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"decks"
+							],
+							"query": [
+								{
+									"key": "gameType",
+									"value": "YGO"
+								}
+							]
+						},
+						"description": "查询当前店铺闲置的可租用实体卡组。"
+					},
+					"response": []
+				},
+				{
+					"name": "租用卡组",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/decks/:id/rent",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"decks",
+								":id",
+								"rent"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d001"
+								}
+							]
+						},
+						"description": "锁定卡组库存，开始计费。"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "卡牌查询 (Wiki)",
+			"item": [
+				{
+					"name": "搜索卡牌 (国内源)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cards/search?keyword=青眼白龙&source=iyingdi",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cards",
+								"search"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "青眼白龙"
+								},
+								{
+									"key": "source",
+									"value": "iyingdi",
+									"description": "数据源：旅法师营地"
+								}
+							]
+						},
+						"description": "通过关键字查询卡牌详情及人民币价格。"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.cardarena.com/v1",
+			"type": "string"
+		}
+	]
+}
