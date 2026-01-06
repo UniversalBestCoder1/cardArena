@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "cardarena-api-v2-full",
+		"name": "CardArena Backend API (Professional)",
+		"description": "CardArena 全量后端接口定义，覆盖赛事、交易、库存、财务、社交等 7 大核心模块，共 50+ 接口。",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01. Auth & Account (认证与账户)",
+			"item": [
+				{
+					"name": "Register (注册)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\"username\":\"yugi\",\"password\":\"123456\",\"role\":\"PLAYER\"}" } }
+				},
+				{
+					"name": "Login (登录)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\"username\":\"yugi\",\"password\":\"123456\"}" } }
+				},
+				{
+					"name": "Refresh Token (刷新令牌)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh" }
+				},
+				{
+					"name": "Get My Profile (个人资料)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/users/me" }
+				},
+				{
+					"name": "Update Profile (更新资料)",
+					"request": { "method": "PUT", "url": "{{baseUrl}}/users/me", "body": { "mode": "raw", "raw": "{\"avatar\":\"new_url.png\",\"lfgStatus\":\"LFG_YGO\"}" } }
+				}
+			]
+		},
+		{
+			"name": "02. Cards (卡牌元数据)",
+			"item": [
+				{
+					"name": "Search Cards (搜索卡牌)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/cards?name=Dragon&gameType=YGO&rarity=SSR" }
+				},
+				{
+					"name": "Get Card Detail (卡牌详情)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/cards/:id" }
+				},
+				{
+					"name": "[Admin] Import/Sync Cards (导入数据)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/admin/cards/sync" }
+				}
+			]
+		},
+		{
+			"name": "03. Inventory (个人库存)",
+			"item": [
+				{
+					"name": "Get My Inventory (我的库存)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/inventory" }
+				},
+				{
+					"name": "Add Card (手动录入/开包)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/inventory", "body": { "mode": "raw", "raw": "{\"cardId\":\"c001\",\"quantity\":1,\"condition\":\"NM\",\"isProxy\":false}" } }
+				},
+				{
+					"name": "Update Item (更新数量/品相)",
+					"request": { "method": "PATCH", "url": "{{baseUrl}}/inventory/:itemId", "body": { "mode": "raw", "raw": "{\"quantity\":2}" } }
+				},
+				{
+					"name": "Remove Item (删除)",
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/inventory/:itemId" }
+				}
+			]
+		},
+		{
+			"name": "04. Decks (卡组构筑)",
+			"item": [
+				{
+					"name": "List My Decks (列表)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/decks" }
+				},
+				{
+					"name": "Get Deck Detail (详情)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/decks/:id" }
+				},
+				{
+					"name": "Create Deck (创建)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/decks", "body": { "mode": "raw", "raw": "{\"name\":\"黑魔导\",\"gameType\":\"YGO\",\"cards\":[{\"cardId\":\"c1\",\"qty\":3,\"section\":\"MAIN\"}]}" } }
+				},
+				{
+					"name": "Update Deck (更新)",
+					"request": { "method": "PUT", "url": "{{baseUrl}}/decks/:id" }
+				},
+				{
+					"name": "Delete Deck (删除)",
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/decks/:id" }
+				},
+				{
+					"name": "Validate Deck (验牌/禁卡表)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/decks/:id/validate" }
+				},
+				{
+					"name": "Share/Publish Deck (分享)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/decks/:id/share" }
+				}
+			]
+		},
+		{
+			"name": "05. Tournaments (赛事系统)",
+			"item": [
+				{
+					"name": "List Tournaments (赛事大厅)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/tournaments?status=REGISTERING" }
+				},
+				{
+					"name": "Get Details (详情)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/tournaments/:id" }
+				},
+				{
+					"name": "Get Participants (参赛表)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/tournaments/:id/participants" }
+				},
+				{
+					"name": "Join Tournament (报名)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/tournaments/:id/join" }
+				},
+				{
+					"name": "Drop/Quit (退赛)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/tournaments/:id/drop" }
+				},
+				{
+					"name": "Get Pairings (当前轮次对阵)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/tournaments/:id/pairings?round=1" }
+				},
+				{
+					"name": "Get Standings (当前排名)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/tournaments/:id/standings" }
+				},
+				{
+					"name": "[Staff] Create Tournament (创建)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/tournaments", "body": { "mode": "raw", "raw": "{\"title\":\"周赛\",\"format\":\"SWISS\"}" } }
+				},
+				{
+					"name": "[Staff] Start Next Round (开下一轮)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/tournaments/:id/rounds/next" }
+				},
+				{
+					"name": "[Staff] Report Match (录入比分)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/tournaments/:id/matches/:matchId/report", "body": { "mode": "raw", "raw": "{\"scoreA\":2,\"scoreB\":1,\"winnerId\":\"uid1\"}" } }
+				},
+				{
+					"name": "[Staff] Override/Penalty (判罚/改分)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/tournaments/:id/matches/:matchId/override" }
+				}
+			]
+		},
+		{
+			"name": "06. Market (交易市场)",
+			"item": [
+				{
+					"name": "Search Listings (搜索挂单)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/market/listings?cardName=BlueEyes&type=SELL" }
+				},
+				{
+					"name": "Create Listing (发布)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/market/listings", "body": { "mode": "raw", "raw": "{\"price\":100,\"type\":\"SELL\"}" } }
+				},
+				{
+					"name": "Cancel Listing (撤单)",
+					"request": { "method": "DELETE", "url": "{{baseUrl}}/market/listings/:id" }
+				},
+				{
+					"name": "Create Order (下单购买)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/market/orders", "body": { "mode": "raw", "raw": "{\"listingId\":\"lid1\"}" } }
+				},
+				{
+					"name": "Get My Orders (订单记录)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/market/orders/me" }
+				},
+				{
+					"name": "[Staff] Verify & Complete (核销/交割)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/market/orders/:id/complete" }
+				},
+				{
+					"name": "[Staff] Dispute Order (仲裁)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/market/orders/:id/dispute" }
+				}
+			]
+		},
+		{
+			"name": "07. Finance (财务)",
+			"item": [
+				{
+					"name": "Get My Logs (个人流水)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/finance/logs/me" }
+				},
+				{
+					"name": "Recharge (充值 mock)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/finance/recharge" }
+				},
+				{
+					"name": "Withdraw (提现申请)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/finance/withdraw" }
+				},
+				{
+					"name": "[Manager] Daily Report (日报)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/admin/finance/reports/daily" }
+				},
+				{
+					"name": "[Manager] Audit Logs (全量审计)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/admin/finance/logs" }
+				}
+			]
+		},
+		{
+			"name": "08. Booking & Social (场馆与社交)",
+			"item": [
+				{
+					"name": "Get Seats (座位状态)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/seats" }
+				},
+				{
+					"name": "Book Seat (预约)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/seats/:id/book" }
+				},
+				{
+					"name": "Check-in (签到/入座)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/seats/:id/checkin" }
+				},
+				{
+					"name": "Leave Seat (离座)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/seats/:id/leave" }
+				},
+				{
+					"name": "Get Chat History (历史消息)",
+					"request": { "method": "GET", "url": "{{baseUrl}}/chat/history?roomId=global" }
+				},
+				{
+					"name": "Send Message (发消息)",
+					"request": { "method": "POST", "url": "{{baseUrl}}/chat/messages" }
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.cardarena.com/v1",
+			"type": "string"
+		}
+	]
+}
