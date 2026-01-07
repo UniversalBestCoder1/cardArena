@@ -492,6 +492,7 @@ export class MockService {
     const tourneys = await DBHelper.query('tournaments');
     let fee = 0;
     let currentCount = 0;
+    let maxPlayers = 999; // Default
     let organizerId = '';
 
     if (tourneys) {
@@ -499,11 +500,18 @@ export class MockService {
         if (tourneys.getString(tourneys.getColumnIndex('id')) === tournamentId) {
           fee = tourneys.getLong(tourneys.getColumnIndex('entryFee'));
           currentCount = tourneys.getLong(tourneys.getColumnIndex('currentPlayers'));
+          maxPlayers = tourneys.getLong(tourneys.getColumnIndex('maxPlayers'));
           organizerId = tourneys.getString(tourneys.getColumnIndex('organizerId'));
           break;
         }
       }
       tourneys.close();
+    }
+
+    // [Fix] Check if full
+    if (currentCount >= maxPlayers) {
+      console.warn('[MockService] Tournament is full:', tournamentId);
+      return false;
     }
 
     // [New] Organizer joins for free

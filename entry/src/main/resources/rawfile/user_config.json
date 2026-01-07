@@ -1,22 +1,32 @@
 {
   "users": [
     { "id": "u_admin", "username": "admin", "password": "123", "role": "MANAGER", "wallet_balance": 99999 },
+    { "id": "u_staff", "username": "staff", "password": "123", "role": "STAFF", "wallet_balance": 500 },
+    
     {
-      "id": "u_staff", 
-      "username": "staff", 
-      "password": "123", 
-      "role": "STAFF", 
-      "wallet_balance": 500,
-      "referee_profile": "{\"specializedGame\":[\"YGO\",\"MTG\"],\"specializedFormats\":[\"OCG Advanced\",\"Standard\",\"Draft\"],\"bio\":\"拥有5年裁判经验，熟悉各类卡牌游戏规则。\",\"yearsOfExperience\":5}"
+      "id": "u_ref_1", "username": "ProJudge_K", "password": "123", "role": "REFEREE", "wallet_balance": 2000,
+      "referee_profile": "{\"specializedGame\":[\"YGO\",\"MTG\"],\"bio\":\"L2 资深裁判，铁面无私。\"}" 
     },
     {
-      "id": "u_referee_2", 
-      "username": "ProJudge", 
-      "password": "123", 
-      "role": "STAFF", 
-      "wallet_balance": 1000,
-      "referee_profile": "{\"specializedGame\":[\"MTG\"],\"specializedFormats\":[\"Modern\",\"Legacy\",\"Commander\"],\"bio\":\"L2 认证裁判，专注于万智牌高级赛制判罚。\",\"yearsOfExperience\":8}"
+      "id": "u_ref_2", "username": "Judge_Alice", "password": "123", "role": "REFEREE", "wallet_balance": 1500,
+      "referee_profile": "{\"specializedGame\":[\"PTCG\"],\"bio\":\"擅长处理宝可梦卡牌争议。\"}" 
     },
-    { "id": "u_player", "username": "player", "password": "123", "role": "PLAYER", "wallet_balance": 100 }
+    {
+      "id": "u_ref_3", "username": "Judge_Bob", "password": "123", "role": "REFEREE", "wallet_balance": 1500,
+      "referee_profile": "{\"specializedGame\":[\"YGO\"],\"bio\":\"专注于游戏王环境判罚。\"}" 
+    },
+
+    { "id": "u_p_01", "username": "player", "password": "123", "role": "PLAYER", "wallet_balance": 500 },
+    { "id": "u_p_02", "username": "武藤游戏", "password": "123", "role": "PLAYER", "wallet_balance": 8000 },
+    { "id": "u_p_03", "username": "海马濑人", "password": "123", "role": "PLAYER", "wallet_balance": 9999999 },
+    { "id": "u_p_04", "username": "城之内", "password": "123", "role": "PLAYER", "wallet_balance": 50 },
+    { "id": "u_p_05", "username": "游城十代", "password": "123", "role": "PLAYER", "wallet_balance": 200 },
+    { "id": "u_p_06", "username": "万丈目", "password": "123", "role": "PLAYER", "wallet_balance": 5000 },
+    { "id": "u_p_07", "username": "不动游星", "password": "123", "role": "PLAYER", "wallet_balance": 300 },
+    { "id": "u_p_08", "username": "杰克·阿特拉斯", "password": "123", "role": "PLAYER", "wallet_balance": 4000 },
+    { "id": "u_p_09", "username": "九十九游马", "password": "123", "role": "PLAYER", "wallet_balance": 100 },
+    { "id": "u_p_10", "username": "榊游矢", "password": "123", "role": "PLAYER", "wallet_balance": 150 },
+    { "id": "u_p_11", "username": "Playmaker", "password": "123", "role": "PLAYER", "wallet_balance": 600 },
+    { "id": "u_p_12", "username": "Ash_Ketchum", "password": "123", "role": "PLAYER", "wallet_balance": 300 }
   ]
 }

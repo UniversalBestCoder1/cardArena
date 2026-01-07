@@ -2,7 +2,7 @@ import router from '@ohos.router';
 import { MockService } from '../mock/MockService';
 import { User } from '../model/User';
 import relationalStore from '@ohos.data.relationalStore';
-import { SmartIcon } from '../common/SmartIcon'; // [New]
+import { SmartIcon } from '../common/SmartIcon';
 
 @Component
 export struct ProfileView {
@@ -63,7 +63,6 @@ export struct ProfileView {
 
       // 3. 菜单列表
       Column() {
-        // [Fixed] 绑定真实余额，统一单位为"积分"
         ProfileMenuItem({ 
           title: `我的钱包 (余额: ${this.user?.wallet_balance || 0} 积分)`, 
           action: () => { router.pushUrl({ url: 'pages/WalletPage' }) } 
@@ -87,9 +86,8 @@ export struct ProfileView {
                 fontColor: '#D94841',
                 action: async () => {
                   try {
-                    // 强制删除数据库文件，下次启动时会重建
                     const ctx = getContext(this);
-                    await relationalStore.deleteRdbStore(ctx, 'CardArena_v18.db');
+                    await relationalStore.deleteRdbStore(ctx, 'CardArena_v21.db');
                     AlertDialog.show({ message: '数据已重置，请完全关闭并重启应用。' });
                   } catch (e) {
                     AlertDialog.show({ message: '重置失败: ' + JSON.stringify(e) });
@@ -106,13 +104,42 @@ export struct ProfileView {
         
         Divider().margin({ top: 10, bottom: 10 })
         
-        // [Updated] 退出登录
+        // [RBAC] 权限控制：只有裁判或管理员可见
+        if (this.user?.role === 'REFEREE' || this.user?.role === 'ADMIN') {
+          Row() {
+             Row() {
+                Image($r('app.media.mtga_icon'))
+                  .width(24).height(24).margin({ right: 12 })
+                Text('裁判工作台')
+                  .fontSize(16).fontColor('#333')
+             }
+             Image($r('app.media.startIcon')).width(16).height(16) // Arrow
+          }
+          .width('100%')
+          .justifyContent(FlexAlign.SpaceBetween)
+          .padding(16)
+          .backgroundColor('#FFF') 
+          .borderRadius(12)
+          .margin({ top: 12 }) // 增加间距
+          .onClick(() => {
+             router.pushUrl({
+               url: 'pages/RefereePage',
+               params: {
+                 tournamentId: 't_ygo_001',
+                 title: '周六 YGO 积分赛'
+               }
+             });
+          })
+        }
+
+        // 退出登录按钮
         Button('退出登录')
           .width('100%')
-          .backgroundColor('#D94841')
+          .height(44)
           .margin({ top: 20 })
+          .backgroundColor('#FF4D4F')
           .onClick(() => {
-            MockService.logout();
+            router.clear();
             router.replaceUrl({ url: 'pages/LoginPage' });
           })
       }

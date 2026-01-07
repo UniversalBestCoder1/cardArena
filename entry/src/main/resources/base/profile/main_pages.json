@@ -7,6 +7,7 @@
     "pages/WalletPage",
     "pages/MyDeckPage",
     "pages/RentalHistoryPage",
+    "pages/RefereePage",
     "pages/AdminInventoryPage",
     "pages/AdminFinancePage"
   ]

@@ -159,4 +159,21 @@ export class DDL {
       created_at INTEGER
     )
   `;
+
+  static readonly MATCHES = `
+    CREATE TABLE IF NOT EXISTS matches (
+      id TEXT PRIMARY KEY,
+      tournamentId TEXT,
+      round INTEGER,
+      playerAId TEXT,
+      playerBId TEXT,
+      playerAName TEXT,
+      playerBName TEXT,
+      scoreA INTEGER DEFAULT 0,
+      scoreB INTEGER DEFAULT 0,
+      winnerId TEXT,
+      status TEXT,
+      tableNumber INTEGER
+    )
+  `;
 }

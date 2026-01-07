@@ -8,7 +8,7 @@ export interface RefereeProfile {
 export interface User {
   id: string;
   username: string;
-  role: 'MANAGER' | 'STAFF' | 'PLAYER';
+  role: 'MANAGER' | 'STAFF' | 'PLAYER' | 'REFEREE' | 'ADMIN';
   wallet_balance?: number;
   refereeProfile?: RefereeProfile;
   // [New] Social Status

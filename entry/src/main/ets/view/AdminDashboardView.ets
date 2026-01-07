@@ -142,7 +142,7 @@ export struct AdminDashboardView {
           .margin({ top: 30, bottom: 30 })
         
         this.NavButton('赛事管理')
-        this.NavButton('顾客沟通') // [新增] 全员可见
+        this.NavButton('顾客沟通')
         
         // 权限控制：仅店长可见
         if (this.userRole === 'MANAGER') {
@@ -349,6 +349,23 @@ export struct AdminDashboardView {
         Button('开始下一轮排表')
           .onClick(() => this.startNextRound(t))
           .backgroundColor('#007DFF')
+          .margin({ right: 10 })
+          
+        // [New] 动态执裁入口：仅当赛事需要裁判时显示
+        if (t.requireReferee) {
+          Button('进入执裁')
+            .backgroundColor('#F1C40F')
+            .fontColor('#333')
+            .onClick(() => {
+               router.pushUrl({
+                 url: 'pages/RefereePage',
+                 params: {
+                   tournamentId: t.id,
+                   title: t.title
+                 }
+               });
+            })
+        }
         
         Blank()
         

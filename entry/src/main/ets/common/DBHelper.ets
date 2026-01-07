@@ -18,8 +18,11 @@ interface UserConfig {
 class DBHelper {
   private rdbStore: relationalStore.RdbStore | null = null;
   private context: context.Context | null = null;
-  private initPromise: Promise<void> | null = null; // [Fixed] 初始化锁
+  private initPromise: Promise<void> | null = null; 
   private resolveInit: (() => void) | null = null;
+  
+  // [New] 用于记录初始化时自动报名的玩家数量
+  private initialEnrollmentCount: number = 0;
 
   private STORE_CONFIG: relationalStore.StoreConfig = {
     name: 'CardArena_v21.db',
@@ -66,6 +69,7 @@ class DBHelper {
       await this.rdbStore.executeSql(DDL.CHAT_MESSAGES);
       await this.rdbStore.executeSql(DDL.TRANSACTIONS);
       await this.rdbStore.executeSql(DDL.PLAYER_DECKS);
+      await this.rdbStore.executeSql(DDL.MATCHES);
       
       // [New] Social Tables
       await this.rdbStore.executeSql(DDL.DECK_POSTS);
@@ -115,15 +119,23 @@ class DBHelper {
         const config = JSON.parse(jsonStr) as UserConfig;
         
         if (config && config.users) {
+           let enrolledCount = 0;
            for (const u of config.users) {
              await this.insert('users', u);
+             // [New] 自动让所有 PLAYER 报名 t_ygo_001
+             if (u.role === 'PLAYER') {
+               await this.insert('enrollments', {
+                 tournament_id: 't_ygo_001',
+                 user_id: u.id as string
+               });
+               enrolledCount++;
+             }
            }
-           console.info('DBHelper: Users seeded from config file.');
+           this.initialEnrollmentCount = enrolledCount;
+           console.info(`DBHelper: Users seeded. Auto-enrolled ${enrolledCount} players to t_ygo_001.`);
         }
       } catch (e) {
         console.error('DBHelper: Failed to load user config: ' + JSON.stringify(e));
-        // Fallback or re-throw? Ideally fallback to hardcoded if critical, but user wants config.
-        // For now, let's just log.
       }
     } else {
         console.warn('DBHelper: Context is null, cannot load user config.');
@@ -149,7 +161,7 @@ class DBHelper {
         startTime: '2025-12-30 13:30',
         status: TournamentStatus.REGISTERING,
         maxPlayers: 32,
-        currentPlayers: 12,
+        currentPlayers: this.initialEnrollmentCount || 0, // [New] 使用自动报名的人数
         entryFee: 30,
         location: '对战区 A',
         description: '瑞士轮赛制，使用最新 OCG 禁卡表。',
@@ -323,16 +335,8 @@ class DBHelper {
     for (const d of decks) {
       await this.insert('decks', d);
     }
-
-    // E. 插入单卡
-    const singles: relationalStore.ValuesBucket[] = [
-      // ... existing singles
-    ];
-    for (const s of singles) {
-      // await this.insert('singles', s); // Existing logic kept implicitly if I don't delete it
-    }
     
-    // [New] Seed Master Database with many cards
+    // [New] Seed Master Database
     const masterCount = await this.queryCount('card_database');
     if (masterCount === 0) {
        console.info('DBHelper: Seeding Master Card Database...');
